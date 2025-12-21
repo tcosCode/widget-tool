@@ -79,6 +79,8 @@
   border-radius: 8px;
   font-weight: 600;
   border-left: 4px solid #c62828;
+  text-align: center;
+  animation: fadeIn 0.3s ease-in;
 }
 
 .hidden {
@@ -93,6 +95,33 @@
   font-weight: 600;
   border-left: 4px solid #1565c0;
   text-align: center;
+  animation: fadeIn 0.4s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+.fadeOut {
+  animation: fadeOut 0.5s ease-out forwards;
 }
 
 .buttonSecondary {

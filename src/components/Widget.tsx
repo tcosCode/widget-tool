@@ -11,6 +11,7 @@ interface WidgetValidation {
 const WidgetTester: React.FC = () => {
   const [widgetCode, setWidgetCode] = useState<string>('');
   const [showError, setShowError] = useState<boolean>(false);
+  const [fadeOutError, setFadeOutError] = useState<boolean>(false);
   const [isWidgetLoaded, setIsWidgetLoaded] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -42,8 +43,15 @@ const WidgetTester: React.FC = () => {
 
   const displayError = () => {
     setShowError(true);
+    setFadeOutError(false);
+    
+    setTimeout(() => {
+      setFadeOutError(true);
+    }, 3500);
+    
     setTimeout(() => {
       setShowError(false);
+      setFadeOutError(false);
     }, 4000);
   };
 
@@ -89,7 +97,7 @@ const WidgetTester: React.FC = () => {
 
   return (
     <section className={styles.widgetTester}>
-      <h1 className={styles.title}>WIDGET TOOLS</h1>
+      <h1 className={styles.title}>WIDGET TOOL</h1>
 
       <div className={styles.inputSection}>
         <label htmlFor="widget-input" className={styles.label}>
@@ -111,14 +119,16 @@ const WidgetTester: React.FC = () => {
         ) : (
           <>
             <div className={styles.infoMessage}>
-              Para probar otro widget, recarga la página.
+              Widget cargado correctamente. Para probar otro widget, recarga la página.
             </div>
             <button onClick={reloadPage} className={styles.buttonSecondary}>
               Recargar Página (F5)
             </button>
           </>
         )}
-        <div className={`${styles.error} ${showError ? '' : styles.hidden}`}>
+        <div 
+          className={`${styles.error} ${!showError ? styles.hidden : ''} ${fadeOutError ? styles.fadeOut : ''}`}
+        >
           Código inválido
         </div>
       </div>
