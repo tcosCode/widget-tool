@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import styles from './WidgetTester.module.css';
 
 interface WidgetValidation {
@@ -11,7 +11,7 @@ interface WidgetValidation {
 const WidgetTester: React.FC = () => {
   const [widgetCode, setWidgetCode] = useState<string>('');
   const [showError, setShowError] = useState<boolean>(false);
-  const [buttonText, setButtonText] = useState<string>('Cargar Widget');
+  const [isWidgetLoaded, setIsWidgetLoaded] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const validateAndExtractWidget = (code: string): WidgetValidation => {
@@ -48,7 +48,7 @@ const WidgetTester: React.FC = () => {
   };
 
   const loadWidget = () => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || isWidgetLoaded) return;
 
     const validation = validateAndExtractWidget(widgetCode);
 
@@ -66,12 +66,6 @@ const WidgetTester: React.FC = () => {
     widgetDiv.setAttribute('data-widget-id', validation.widgetId!);
     container.appendChild(widgetDiv);
 
-    // Eliminar scripts anteriores del mismo src para evitar redeclaraciones
-    const existingScripts = document.querySelectorAll(
-      `script[src="${validation.scriptSrc}"]`
-    );
-    existingScripts.forEach((s) => s.remove());
-
     // Cargar el script de forma segura
     const script = document.createElement('script');
     script.src = validation.scriptSrc!;
@@ -82,10 +76,15 @@ const WidgetTester: React.FC = () => {
       container.innerHTML = '';
     };
 
-    container.appendChild(script);
+    script.onload = () => {
+      setIsWidgetLoaded(true);
+    };
 
-    // Cambiar texto del botón después de la primera carga
-    setButtonText('Recargar Widget');
+    container.appendChild(script);
+  };
+
+  const reloadPage = () => {
+    window.location.reload();
   };
 
   return (
@@ -103,10 +102,22 @@ const WidgetTester: React.FC = () => {
           rows={4}
           value={widgetCode}
           onChange={(e) => setWidgetCode(e.target.value)}
+          disabled={isWidgetLoaded}
         />
-        <button onClick={loadWidget} className={styles.button}>
-          {buttonText}
-        </button>
+        {!isWidgetLoaded ? (
+          <button onClick={loadWidget} className={styles.button}>
+            Cargar Widget
+          </button>
+        ) : (
+          <>
+            <div className={styles.infoMessage}>
+              Para probar otro widget, recarga la página.
+            </div>
+            <button onClick={reloadPage} className={styles.buttonSecondary}>
+              Recargar Página (F5)
+            </button>
+          </>
+        )}
         <div className={`${styles.error} ${showError ? '' : styles.hidden}`}>
           Código inválido
         </div>
