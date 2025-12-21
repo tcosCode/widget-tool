@@ -1,0 +1,133 @@
+* {
+  box-sizing: border-box;
+}
+
+.widgetTester {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.title {
+  color: #333;
+  margin: 0 0 1rem 0;
+  font-size: 2.5rem;
+  text-align: center;
+  font-weight: 700;
+}
+
+.inputSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.label {
+  font-weight: 600;
+  color: #555;
+  font-size: 1rem;
+}
+
+.textarea {
+  padding: 1rem;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-family: "Courier New", monospace;
+  font-size: 0.9rem;
+  resize: vertical;
+  transition: border-color 0.2s;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: #4caf50;
+}
+
+.button {
+  width: fit-content;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    transform 0.1s;
+}
+
+.button:hover {
+  background-color: #45a049;
+}
+
+.button:active {
+  transform: scale(0.98);
+}
+
+.error {
+  padding: 1rem;
+  background-color: #ffebee;
+  color: #c62828;
+  border-radius: 8px;
+  font-weight: 600;
+  border-left: 4px solid #c62828;
+}
+
+.hidden {
+  display: none;
+}
+
+.widgetContainer {
+  min-height: 500px;
+  padding: 2rem;
+  border: 2px dashed #ddd;
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.widgetContainer:empty::before {
+  content: "El widget aparecerá aquí...";
+  color: #999;
+  font-style: italic;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .inputSection {
+    padding: 1.5rem;
+  }
+
+  .textarea {
+    font-size: 0.85rem;
+  }
+
+  .button {
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  .widgetContainer {
+    min-height: 350px;
+    padding: 1.5rem;
+  }
+
+  .widgetContainer:empty::before {
+    font-size: 1rem;
+  }
+}

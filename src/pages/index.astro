@@ -1,11 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Widget from "../components/Widget.astro";
+import WidgetTester from "../components/Widget.tsx";
 import MainWidget from "../components/Main.astro";
 ---
 
 <Layout>
   <MainWidget>
-    <Widget slot="widget" />
+    <WidgetTester slot="widget" client:load  />
   </MainWidget>
 </Layout>
