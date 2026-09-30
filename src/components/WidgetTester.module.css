@@ -38,7 +38,8 @@
   border: 2px solid #ddd;
   border-radius: 8px;
   font-family: "Courier New", monospace;
-  font-size: 0.9rem;
+  /* iOS amplía la vista al enfocar un campo de menos de 16px. */
+  font-size: 1rem;
   resize: vertical;
   transition: border-color 0.2s;
 }
@@ -180,10 +181,6 @@
 
   .inputSection {
     padding: 1.5rem;
-  }
-
-  .textarea {
-    font-size: 0.85rem;
   }
 
   .button {
